@@ -29,13 +29,13 @@ A _"resetdb"_ script exists that allows you to reset the database to its origina
 
 ### Task 2: Consume Environment Variables
 
-- [ ] Bring the port number from the `process.env` variable, falling back to `9000` if `process.env.PORT` is undefined **!!!**
+- [x] Bring the port number from the `process.env` variable, falling back to `9000` if `process.env.PORT` is undefined **!!!**
 
 ### Task 3: Build Endpoints
 
 Inside `api/projects/projects-router.js` build the following endpoints:
 
-- [ ] `[GET] /api/projects`
+- [x] `[GET] /api/projects`
   - Returns an array of projects as the body of the response.
   - If there are no projects it responds with an empty array.
 - [ ] `[GET] /api/projects/:id`
