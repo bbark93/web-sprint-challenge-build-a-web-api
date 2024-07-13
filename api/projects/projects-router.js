@@ -66,7 +66,7 @@ router.delete('/:id', validateProjectId, async (req, res, next) => {
 
 router.use((err, req, res, next) => {
   res.status(err.status || 500).json({
-    customMessage: "somthing tragic inside posts router happened",
+    customMessage: "somthing tragic inside projects router happened",
     message: err.message,
     stack: err.stack,
   });
