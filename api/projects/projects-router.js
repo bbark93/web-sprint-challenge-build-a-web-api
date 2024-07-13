@@ -54,6 +54,16 @@ router.delete('/:id', validateProjectId, async (req, res, next) => {
     }
   });
 
+  router.get('/:id/actions', validateProjectId, async (req, res, next) => {
+    // RETURN THE ARRAY OF USER POSTS
+    try {
+      const result = await Projects.getProjectActions(req.params.id)
+      res.json(result)
+    } catch (err) {
+      next(err)
+    }
+  });
+
 router.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     customMessage: "somthing tragic inside posts router happened",
