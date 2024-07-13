@@ -11,6 +11,7 @@ function logger(req, res, next) {
 }
 
 async function validateProjectId(req, res, next) {
+    console.log('id = ', req.params.id);
     try {
       const project = await Projects.get(req.params.id)
       if (!project) {
