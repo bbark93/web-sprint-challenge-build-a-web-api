@@ -5,7 +5,7 @@ const Actions = require("./actions-model");
 
 const router = express.Router();
 
-router.get("/actions", (req, res, next) => {
+router.get("/", (req, res, next) => {
     Actions.get()
       .then((actions) => {
         res.json(actions);

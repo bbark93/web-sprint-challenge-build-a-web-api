@@ -1,7 +1,8 @@
 const express = require("express");
 const { logger } = require('./projects/projects-middleware');
 const server = express();
-const projectRouter = require("./projects/projects-router");
+const projectsRouter = require("./projects/projects-router");
+const actionsRouter = require('./actions/actions-router');
 
 // Configure your server here
 // Build your actions router in /api/actions/actions-router.js
@@ -12,6 +13,7 @@ server.use(express.json());
 
 server.use(logger);
 
-server.use("/api/projects", projectRouter);
+server.use("/api/projects", projectsRouter);
+server.use('/api/actions', actionsRouter);
 
 module.exports = server;
