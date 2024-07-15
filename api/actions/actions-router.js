@@ -19,19 +19,19 @@ router.get("/", (req, res, next) => {
     res.json(req.action);
   });
 
-//   router.post("/", validateAction, (req, res, next) => {
-//     // RETURN THE NEWLY CREATED USER OBJECT
-//     Actions.insert({
-//       project_id: req.project_id,
-//       description: req.description,
-//       notes: req.notes,
-//       completed: req.completed,
-//     })
-//       .then((newAction) => {
-//         res.status(201).json(newAction);
-//       })
-//       .catch(next);
-//   });
+  router.post("/", validateAction, (req, res, next) => {
+    // RETURN THE NEWLY CREATED USER OBJECT
+    Actions.insert({
+      project_id: req.project_id,
+      description: req.description,
+      notes: req.notes,
+      completed: req.completed,
+    })
+      .then((newAction) => {
+        res.status(201).json(newAction);
+      })
+      .catch(next);
+  });
 
 router.delete('/:id', validateActionId, async (req, res, next) => {
     // RETURN THE FRESHLY DELETED USER OBJECT

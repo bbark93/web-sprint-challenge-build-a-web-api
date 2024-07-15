@@ -1,5 +1,6 @@
 // add middlewares here related to actions
 const Actions = require('./actions-model');
+const Projects = require('../projects/projects-model');
 
 async function validateActionId(req, res, next) {
     try {
@@ -17,18 +18,30 @@ async function validateActionId(req, res, next) {
     }
   }
 
-  function validateAction(req, res, next) {
+  async function validateAction(req, res, next) {
     const { project_id, description, notes, completed } = req.body
-    if (!project_id || !description || !notes) {
-      res.status(400).json({
-        message: 'missing required project ID, description, and notes field',
-      })
-    }else {
-      req.project_id = project_id
-      req.description = description
-      req.notes = notes
-      req.completed = completed
-      next()
+
+    try {
+       const project = await Projects.get(project_id) 
+       if (!project) {
+            next({ status: 404, message: `project ${project_id} doesn't exist`})
+       }else {
+        if (!description || !notes) {
+            res.status(400).json({
+              message: 'missing required description and notes field',
+            })
+          }else {
+            req.project_id = project_id
+            req.description = description
+            req.notes = notes
+            req.completed = completed
+            next()
+          }
+       }
+    } catch (err) {
+        res.status(500).json({
+            message: 'problem validating action'
+          })
     }
   }
 
