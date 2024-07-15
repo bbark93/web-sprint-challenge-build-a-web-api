@@ -33,6 +33,18 @@ router.get("/", (req, res, next) => {
       .catch(next);
   });
 
+  router.put("/:id", validateActionId, validateAction, (req, res, next) => {
+    // RETURN THE FRESHLY UPDATED USER OBJECT
+    Actions.update(req.params.id, { project_id: req.project_id, description: req.description, notes: req.notes, completed: req.completed })
+      .then(() => {
+        return Actions.get(req.params.id);
+      })
+      .then((action) => {
+        res.json(action);
+      })
+      .catch(next);
+  });
+
 router.delete('/:id', validateActionId, async (req, res, next) => {
     // RETURN THE FRESHLY DELETED USER OBJECT
     try {
