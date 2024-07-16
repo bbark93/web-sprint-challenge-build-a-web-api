@@ -33,9 +33,16 @@ router.post("/", validateProject, (req, res, next) => {
 
 router.put("/:id", validateProjectId, validateProject, (req, res, next) => {
   // RETURN THE FRESHLY UPDATED USER OBJECT
+  const completed = req.completed;
   Projects.update(req.params.id, { name: req.name, description: req.description, completed: req.completed })
     .then(() => {
-      return Projects.get(req.params.id);
+      // console.log('completed =', completed);
+      // if (completed) {
+        return Projects.get(req.params.id);
+      // }else {
+      //   console.log('esle statement');
+      //   next({ status: 400, message: 'missing required completed field' });
+      // }
     })
     .then((project) => {
       res.json(project);
