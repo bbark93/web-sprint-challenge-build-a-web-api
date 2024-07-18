@@ -34,15 +34,13 @@ router.post("/", validateProject, (req, res, next) => {
 router.put("/:id", validateProjectId, validateProject, (req, res, next) => {
   // RETURN THE FRESHLY UPDATED USER OBJECT
   const completed = req.completed;
-  Projects.update(req.params.id, { name: req.name, description: req.description, completed: req.completed })
+  Projects.update(req.params.id, {
+    name: req.name,
+    description: req.description,
+    completed: req.completed,
+  })
     .then(() => {
-      // console.log('completed =', completed);
-      // if (completed) {
-        return Projects.get(req.params.id);
-      // }else {
-      //   console.log('esle statement');
-      //   next({ status: 400, message: 'missing required completed field' });
-      // }
+      return Projects.get(req.params.id);
     })
     .then((project) => {
       res.json(project);
@@ -50,26 +48,26 @@ router.put("/:id", validateProjectId, validateProject, (req, res, next) => {
     .catch(next);
 });
 
-router.delete('/:id', validateProjectId, async (req, res, next) => {
-    // RETURN THE FRESHLY DELETED USER OBJECT
-    console.log(req.user);
-    try {
-      await Projects.remove(req.params.id)
-      res.json(req.user)
-    } catch (err) {
-      next(err)
-    }
-  });
+router.delete("/:id", validateProjectId, async (req, res, next) => {
+  // RETURN THE FRESHLY DELETED USER OBJECT
+  console.log(req.user);
+  try {
+    await Projects.remove(req.params.id);
+    res.json(req.user);
+  } catch (err) {
+    next(err);
+  }
+});
 
-  router.get('/:id/actions', validateProjectId, async (req, res, next) => {
-    // RETURN THE ARRAY OF USER POSTS
-    try {
-      const result = await Projects.getProjectActions(req.params.id)
-      res.json(result)
-    } catch (err) {
-      next(err)
-    }
-  });
+router.get("/:id/actions", validateProjectId, async (req, res, next) => {
+  // RETURN THE ARRAY OF USER POSTS
+  try {
+    const result = await Projects.getProjectActions(req.params.id);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.use((err, req, res, next) => {
   res.status(err.status || 500).json({

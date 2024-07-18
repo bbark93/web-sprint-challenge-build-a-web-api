@@ -11,37 +11,38 @@ function logger(req, res, next) {
 }
 
 async function validateProjectId(req, res, next) {
-    try {
-      const project = await Projects.get(req.params.id)
-      if (!project) {
-        next({ status: 404, message: 'project not found' })
-      }else {
-        req.project = project
-        next()
-      }
-    } catch (err) {
-      res.status(500).json({
-        message: 'problem finding project'
-      })
+  try {
+    const project = await Projects.get(req.params.id);
+    if (!project) {
+      next({ status: 404, message: "project not found" });
+    } else {
+      req.project = project;
+      next();
     }
+  } catch (err) {
+    res.status(500).json({
+      message: "problem finding project",
+    });
   }
+}
 
-  function validateProject(req, res, next) {
-    const { name, description, completed } = req.body
-    if (!name || !description) {
-      res.status(400).json({
-        message: 'missing required name and description field',
-      })
-    }else {
-      req.name = name
-      req.description = description
-      req.completed = completed
-      next()
-    }
+function validateProject(req, res, next) {
+  const { name, description, completed } = req.body;
+
+  if (!name || !description || completed === undefined) {
+    res.status(400).json({
+      message: "missing required name, description and completed fields",
+    });
+  } else {
+    req.name = name;
+    req.description = description;
+    req.completed = completed;
+    next();
   }
+}
 
 module.exports = {
-    logger,
-    validateProjectId,
-    validateProject
-  }
+  logger,
+  validateProjectId,
+  validateProject,
+};
