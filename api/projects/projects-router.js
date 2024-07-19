@@ -60,7 +60,7 @@ router.delete("/:id", validateProjectId, async (req, res, next) => {
 });
 
 router.get("/:id/actions", validateProjectId, async (req, res, next) => {
-  // RETURN THE ARRAY OF USER POSTS
+  // RETURN THE ARRAY OF USER POST
   try {
     const result = await Projects.getProjectActions(req.params.id);
     res.json(result);
